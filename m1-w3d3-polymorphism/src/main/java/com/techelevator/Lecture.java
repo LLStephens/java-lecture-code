@@ -36,7 +36,20 @@ public class Lecture {
 		 * methods of the parent-type are available */
 		
 		Animal genericAnimal = aChicken;  // assigning a Chicken reference to a variable of parent-type Animal
-		// genericAnimal.layEgg();  // this causes a compiler error because genericAnimal is a reference of type Animal and layEgg() is not a method of type Animal
+//		 genericAnimal.layEgg();  // this causes a compiler error because genericAnimal is a reference of type Animal and layEgg() is not a method of type Animal
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

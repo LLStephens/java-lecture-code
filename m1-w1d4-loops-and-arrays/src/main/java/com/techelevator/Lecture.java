@@ -85,7 +85,7 @@ public class Lecture {
 		System.out.println();
 		
 		System.out.println("Displaying the numbers 0 - 9 using a for loop");
-		for(int ix = 0; ix < 10; ix++) {
+		for(int ix = 10; ix > 0; ix--) {
 			System.out.println(ix);
 		}
 		System.out.println();
@@ -131,6 +131,10 @@ public class Lecture {
 		System.out.println("I have room for "+trees.length+" trees!");  
 		trees[1] = "Maple";
 		System.out.println(trees[1]);
+		System.out.println("Here's our whole array");
+		for(int i = 0; i < trees.length; i++) {
+			System.out.println(trees[i]);
+		}
 		
 		int[] intArray = new int[] { 1, 2, 3 };			// this is how we declare an array literal
 		for(int ix = 0; ix < intArray.length; ix++) {
@@ -154,3 +158,19 @@ public class Lecture {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

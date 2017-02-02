@@ -1,15 +1,15 @@
 package com.techelevator.farm;
 
-public class Cow implements Animal {
+public class Sheep implements Animal {
 
 	@Override
 	public String getName() {
-		return "Cow";
+		return "Sheep";
 	}
 
 	@Override
 	public String getSound() {
-		return "moo!";
+		return "baaa";
 	}
 
 }

@@ -178,7 +178,12 @@ public class Lecture {
 		//int firstVariable = 3;  // this is a compiler error because we already have a variable named firstVariable in this scope
 		int secondVariable = 7; // this is allowed because there is no variable named secondVariable in this scope
 		
-		boolean burnItDown = shouldBurnDownTheBuilding(14, 20);
+//		boolean burnItDown = ;
+		System.out.println("Burn down the building? " + shouldBurnDownTheBuilding(14, 13));
+		
+		String firstName = "Casey";
+		String lastName = "Borders";
+		printFullName(firstName, lastName);
 	}
 	
 	static boolean shouldBurnDownTheBuilding(int numberOfEmployees, int piecesOfCake) {
@@ -188,4 +193,36 @@ public class Lecture {
 			return false;
 		}
 	}
+	
+	static void printFullName(String firstName, String lastName) {
+		System.out.println(firstName + " " + lastName);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,7 +3,7 @@ package com.techelevator.farm;
 public class OldMacdonald {
 	public static void main(String[] args) {
 		
-		Animal[] farmAnimals = new Animal[] { new Cow(), new Chicken() };
+		Animal[] farmAnimals = new Animal[] { new Cow(), new Chicken(), new Sheep() };
 		
 		for(Animal animal : farmAnimals) {
 			String name = animal.getName();
@@ -14,6 +14,35 @@ public class OldMacdonald {
 			System.out.println("And a "+sound+" "+sound+" there");
 			System.out.println("Here a "+sound+" there a "+sound+" everywhere a "+sound+" "+sound);
 			System.out.println();
+			
+			if(animal instanceof Cow) {
+				System.out.println("This is a cow");
+			} else if(animal instanceof Sheep) {
+				System.out.println("This is a sheep");
+			} else if(animal instanceof Chicken) {
+				System.out.println("This is a chicken");
+			} else {
+				System.out.println("I have no idea what this is!");
+			}
+			
+			System.out.println();
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -32,3 +32,19 @@ public class ReserveAuction extends Auction {
 		return isCurrentWinningBid;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

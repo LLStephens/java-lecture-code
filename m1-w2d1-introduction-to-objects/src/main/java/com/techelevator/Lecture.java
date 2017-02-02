@@ -33,7 +33,7 @@ public class Lecture {
 		
 		System.out.println();
 		System.out.println("***********************************************");
-		System.out.println("****** MEMBER VARIABLES (i.e. ATTRIBUTES ******");
+		System.out.println("****** MEMBER VARIABLES (i.e. ATTRIBUTES) ******");
 		System.out.println("***********************************************");
 		System.out.println();
 		

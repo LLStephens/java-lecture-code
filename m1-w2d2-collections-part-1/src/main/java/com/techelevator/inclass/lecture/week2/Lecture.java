@@ -1,9 +1,6 @@
-package com.techelevator;
+package com.techelevator.inclass.lecture.week2;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Lecture {
 
@@ -55,6 +52,11 @@ public class Lecture {
 		if(employees > piecesOfCake) {
 			System.out.println("Burn the building down");
 		}
+		
+		java.util.List<Integer> hours = new ArrayList<Integer>();
+	
+		hours.add(8);
+		hours.add(new Integer(8));
 		
 		Double accountBalance = null;
 		// double newBalance = accountBalance + 100;  // this causes a NullPointerException because we are trying to "unbox" a null value
@@ -122,7 +124,7 @@ public class Lecture {
 		System.out.println("####################");
 		System.out.println();
 		
-		Set<String> students = new HashSet<String>();  // change HashSet to TreeSet or LinkedHashSet to see how the behavior changes
+		Set<String> students = new LinkedHashSet<String>();  // change HashSet to TreeSet or LinkedHashSet to see how the behavior changes
 		
 		System.out.println("####################");
 		System.out.println("Sets cannot contain duplicates");
@@ -153,4 +155,24 @@ public class Lecture {
 		System.out.println();
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

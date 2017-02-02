@@ -52,6 +52,29 @@ public class Lecture {
 		
 		dontChangeMe = 1;		// here we are initializing dontChangeMe
 		
-		// dontChangeMe = 2; // compile error because dontChangeMe has already been initialized
+//		 dontChangeMe = 2; // compile error because dontChangeMe has already been initialized
+		
+		System.out.println(Math.PI);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
