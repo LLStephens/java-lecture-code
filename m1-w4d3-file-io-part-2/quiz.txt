@@ -1,0 +1,3 @@
+Every morning students take a quiz that tests their comprehension of the previous day's material.  
+
+Scores form this quiz are summed up and at the end of the bootcamp the student with the highest quiz score gets a cookie.
