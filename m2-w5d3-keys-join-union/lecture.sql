@@ -1,100 +1,99 @@
--- INNER JOINS
+-- ********* INNER JOIN ***********
 
--- Who made payment 16666
+-- Let's find out who made payment 16666:
 SELECT * 
 FROM payment
-WHERE payment_id =  16666;
+WHERE payment_id = 16666
 
+-- Ok, that gives us a customer_id, but not the name. We can use the customer_id to get the name FROM the customer table
+SELECT *
+FROM payment JOIN customer ON payment.customer_id = customer.customer_id
+WHERE payment_id = 16666
 
+-- We can see that the * pulls back everything from both tables. We just want everything from payment and then the first and last name of the customer:
+SELECT payment.*, customer.first_name, customer.last_name 
+FROM payment JOIN customer ON payment.customer_id = customer.customer_id
+WHERE payment_id = 16666
 
--- How would we get the customer's name and not the customer id
-select *, first_name, last_name from payment
-JOIN customer ON payment.customer_id = customer.customer_id
-where payment_id = 16666;
-
-
--- Since * brings everything from both tables, let's just narrow it to
--- everything from paynent and first, last name of customer
-select payment.*, customer.first_name, customer.last_name from payment
-JOIN customer ON payment.customer_id = customer.customer_id
-where payment_id = 16666;
-
-
--- When did they return it? How could we get that data from the rental table
-select payment.*, customer.first_name, customer.last_name, rental.return_date from payment
-JOIN customer ON payment.customer_id = customer.customer_id
+-- But when did they return the rental? Where would that data come from? From the rental table, so let’s join that.
+SELECT payment.*, customer.first_name, customer.last_name, rental.return_date 
+FROM payment JOIN customer ON payment.customer_id = customer.customer_id
 JOIN rental ON rental.rental_id = payment.rental_id
-where payment_id = 16666;
+WHERE payment_id = 16666
 
-
--- What did they rent? Can we use the rental inventory id to get the film id?
-select payment.*, customer.first_name, customer.last_name, rental.return_date, film.title from payment
-JOIN customer ON payment.customer_id = customer.customer_id
+-- What did they rent? Film id can be gotten through inventory.
+SELECT payment.*, customer.first_name, customer.last_name, rental.return_date, film.title 
+FROM payment JOIN customer ON payment.customer_id = customer.customer_id
 JOIN rental ON rental.rental_id = payment.rental_id
 JOIN inventory ON inventory.inventory_id = rental.inventory_id
 JOIN film ON film.film_id = inventory.film_id
-where payment_id = 16666;
+WHERE payment_id = 16666
 
-
-
--- Lets bring back film id 948
-select * from film where film_id=948;
-
-
--- But who acted in it? We can get a list of actors from a many to many:
-select film.title, (actor.first_name + ' ' + actor.last_name) AS actor from film
+-- What if we wanted to know who acted in that film?    
+SELECT film.title, array_agg(actor.first_name || ' ' || actor.last_name) AS actors FROM film
 JOIN film_actor ON film_actor.film_id = film.film_id
 JOIN actor ON actor.actor_id = film_actor.actor_id
-where film.film_id=948;
+WHERE film.film_id=948
+GROUP BY film.film_id
 
---What about the films and what stores they are in?
-select f.title, c.city from store s
-join inventory I on s.store_id = I.store_id
-join film f on I.film_id = f.film_id
-join address a on s.address_id = a.address_id
-join city c on a.city_id = c.city_id;
+-- What if we wanted a list of all the films and their categories ordered by film title
+SELECT f.title, c.name 
+FROM film f 
+JOIN film_category fc ON f.film_id=fc.film_id 
+JOIN category c ON c.category_id=fc.category_id 
+ORDER BY f.title;
 
--- More complex, who acted in what together?
-select f.title, a1.first_name + ' ' + a1.last_name, a2.first_name + ' ' + a2.last_name from film f 
-join film_actor fa1 on f.film_id = fa1.film_id 
-join film_actor fa2 on f.film_id = fa2.film_id AND fa1.actor_id != fa2.actor_id
-join actor a1 on fa1.actor_id = a1.actor_id 
-join actor a2 on fa2.actor_id = a2.actor_id;
+-- Show all the 'Comedy' films ordered by film title
+SELECT f.title, c.name 
+FROM film f 
+JOIN film_category fc ON f.film_id=fc.film_id 
+JOIN category c ON c.category_id=fc.category_id 
+WHERE c.name='Comedy' 
+ORDER BY f.title;
+
+-- Finally, let's count the number of films under each category
+SELECT c.name, COUNT(c.name) 
+FROM film f 
+JOIN film_category fc ON f.film_id=fc.film_id 
+JOIN category c ON c.category_id=fc.category_id 
+GROUP BY c.name 
+ORDER BY c.name;
 
 
+-- ********* LEFT JOIN ***********
 
+-- (There aren't any great examples of left joins in the "dvdstore" database, so the following queries are for the "world" database)
 
+-- A Left join, selects all records from the "left" table and matches them with records from the "right" table if a matching record exists. 
 
+-- Let's display a list of all countries and their capitals, if they have some.
+SELECT c.name, ci.name
+FROM country c
+join city ci ON c.capital = ci.id
 
--- LEFT OUTER JOINS FOR WORLD
--- Show all countries and their capitals
-select c.name, ci.name
-from country c
-join city ci ON c.capital = ci.id;
+-- Only 232 rows
+-- But we’re missing entries:
+SELECT count(*) 
+FROM country
 
--- we are missing some entries though, only 232 when there are in fact 239
-
-select c.name, ci.name
-from country c
+-- There are 239 countries. So how do we show them all even if they don’t have a capital?
+-- That’s because if the rows don’t exist in both tables, we won’t show any information for it. If we want to show data FROM the left side table everytime, we can use a different join:
+SELECT c.name, ci.name
+FROM country c
 LEFT JOIN city ci ON c.capital = ci.id
 
+-- *********** UNION *************
 
+-- Back to the "dvdstore" database...
 
-
--- UNIONS
 -- Gathers a list of all first names used by actors and customers
 -- By default removes duplicates
-select first_name from actor
-union
-select first_name from customer order by first_name;
-
+SELECT first_name FROM actor
+UNION
+SELECT first_name FROM customer 
+ORDER BY first_name;
 
 -- Gather the list, but this time note the source table with 'A' for actor and 'C' for customer
-select first_name, 'A' as source from actor
-union
-select first_name, 'C' as source from customer order by first_name;
-
--- Just for fun, count how many distict first names there are for actors, and how many for customers
-select first_name, 'A' as source from actor
-union
-select first_name, 'C' as source from customer order by first_name;
+SELECT first_name, 'A' AS source FROM actor
+UNION
+SELECT first_name, 'C' AS source FROM customer ORDER BY first_name;

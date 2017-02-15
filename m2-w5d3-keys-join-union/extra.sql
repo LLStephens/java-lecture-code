@@ -24,17 +24,40 @@ inner join film_category fc on f.film_id=fc.film_id
 inner join category c on fc.category_id=c.category_id
 where c.name='Horror' and f.title like 'F%';
 
--- Display the number of rentals made by each customer ordered from highest to lowest
-/* SQL
-select c.last_name + ', ' + c.first_name, count(r.rental_id) rentals from rental r
-inner join customer c on c.customer_id=r.customer_id
-group by c.last_name, c.first_name
-order by rentals desc;
-*/
+-- Who acted in what together? (POSTGRESQL)
+SELECT f.title, a1.first_name || ' ' || a1.last_name, a2.first_name || ' ' || a2.last_name FROM film f 
+join film_actor fa1 on f.film_id = fa1.film_id 
+join film_actor fa2 on f.film_id = fa2.film_id AND fa1.actor_id <> fa2.actor_id
+join actor a1 on fa1.actor_id = a1.actor_id 
+join actor a2 on fa2.actor_id = a2.actor_id
 
-/* Postgres
-select c.last_name || ', ' || c.first_name, count(r.rental_id) rentals from rental r
-inner join customer c on c.customer_id=r.customer_id
-group by c.last_name, c.first_name
-order by rentals desc;
-*/
+-- Who acted in what together? (SQL SERVER)
+SELECT f.title, a1.first_name + ' ' + a1.last_name, a2.first_name + ' ' + a2.last_name FROM film f 
+join film_actor fa1 on f.film_id = fa1.film_id 
+join film_actor fa2 on f.film_id = fa2.film_id AND fa1.actor_id <> fa2.actor_id
+join actor a1 on fa1.actor_id = a1.actor_id 
+join actor a2 on fa2.actor_id = a2.actor_id
+
+-- How many times have two actors appeared together? (POSTGRESQL)
+SELECT count(*) as num_of_films, a1.actor_id, a1.first_name || ' ' || a1.last_name, a2.actor_id, a2.first_name || ' ' || a2.last_name FROM film f 
+join film_actor fa1 on f.film_id = fa1.film_id 
+join film_actor fa2 on f.film_id = fa2.film_id AND fa1.actor_id <> fa2.actor_id
+join actor a1 on fa1.actor_id = a1.actor_id 
+join actor a2 on fa2.actor_id = a2.actor_id
+group by a1.actor_id, a2.actor_id
+order by num_of_films DESC
+
+-- How many times have two actors appeared together? (SQL SERVER)
+SELECT count(*) as num_of_films, a1.actor_id, a1.first_name + ' ' + a1.last_name, a2.actor_id, a2.first_name + ' ' + a2.last_name FROM film f 
+join film_actor fa1 on f.film_id = fa1.film_id 
+join film_actor fa2 on f.film_id = fa2.film_id AND fa1.actor_id <> fa2.actor_id
+join actor a1 on fa1.actor_id = a1.actor_id 
+join actor a2 on fa2.actor_id = a2.actor_id
+group by a1.actor_id, a2.actor_id
+order by num_of_films DESC
+
+-- What movies did the two most often acted together actors appear in together?
+SELECT film.title FROM film
+join film_actor af1 ON film.film_id = af1.film_id
+join film_actor af2 ON film.film_id = af2.film_id
+WHERE af1.actor_id = 27 AND af2.actor_id = 60
