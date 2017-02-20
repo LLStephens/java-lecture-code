@@ -45,7 +45,7 @@ public class JDBCExample {
 		/* The next query example takes a parameter (i.e. is dynamic) */
 		String firstName = "Nick";
 		String lastName = "Stallone";
-		//String lastName = "O'Malley";     // This is an exmample of non-malicious user input that will cause the query to break
+//		String lastName = "O'Malley";     // This is an exmample of non-malicious user input that will cause the query to break
 		String sqlMoviesByActor = "SELECT film.title "+
 								  "FROM film join film_actor on film.film_id = film_actor.film_id "+
 								  "JOIN actor on actor.actor_id = film_actor.actor_id "+
@@ -72,12 +72,12 @@ public class JDBCExample {
 		/* PreparedStatement objects are created using the Connection object */
 		PreparedStatement movieByActorStmt = conn.prepareStatement(sqlMoviesByActorParameterized);
 		movieByActorStmt.setString(1, "NICK");
-		movieByActorStmt.setString(2, "STALLONE");
+		movieByActorStmt.setString(2, "O'MALLEY");
 		
 		/* Call executeQuery to return the results as a ResultSet */
 		results = movieByActorStmt.executeQuery();
 		
-		System.out.println("\n\nFilms Starring "+firstName+" "+lastName+": ");
+		System.out.println("\n\nFilms Starring Nick O'Malley: ");
 		while(results.next()) {
 			String title = results.getString("title");
 			System.out.println(title);

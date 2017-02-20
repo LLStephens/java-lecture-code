@@ -2,7 +2,6 @@ package com.techelevator;
 
 import java.time.LocalDate;
 import java.time.MonthDay;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -45,9 +44,11 @@ public class JavaDateExample {
 			System.out.println("Happy Birthday Java!");
 		} else {
 			LocalDate today = LocalDate.now();
-			long daysUntilBirthday = javaBirthdate.getDayOfYear() - today.getDayOfYear();
+			int daysUntilBirthday = javaBirthdate.getDayOfYear() - today.getDayOfYear();
 			if(daysUntilBirthday < 0) {
-				daysUntilBirthday = 365 + daysUntilBirthday;
+				
+				int daysToAdd = today.isLeapYear() ? 366 : 365;
+				daysUntilBirthday = daysToAdd + daysUntilBirthday;
 			}
 			System.out.println(daysUntilBirthday+" days until Java's birthday!");
 		}
@@ -55,3 +56,22 @@ public class JavaDateExample {
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.util.List;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import com.techelevator.city.City;
@@ -27,6 +29,53 @@ public class DAOExample {
 		
 		City theCity = dao.findCityById(smallville.getId());
 		
+		List<City> cities = dao.findCityByDistrict("Kansas");
+		for(City city : cities) {
+			System.out.println(city.getName());
+		}
+		
+		smallville.setDistrict("Kansas");
+		dao.update(smallville);
+		
+		System.out.println("--- Should have Smallville ---");
+		
+		cities = dao.findCityByDistrict("Kansas");
+		for(City city : cities) {
+			System.out.println(city.getName());
+		}
+		
+		dao.delete(smallville.getId());
+		
+		System.out.println("--- Should NOT have Smallville ---");
+		
+		cities = dao.findCityByDistrict("Kansas");
+		for(City city : cities) {
+			System.out.println(city.getName());
+		}
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
